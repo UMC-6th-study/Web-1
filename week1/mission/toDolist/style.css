@@ -1,0 +1,92 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  font-weight: bold;
+}
+
+.todo-form {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10%;
+}
+
+.todo-form #title {
+  width: 100%;
+  padding: 5% 0 15% 0;
+  font-size: 2em;
+  border-bottom: 1.5px solid rgba(110, 118, 118, 0.319);
+}
+.todo-form .sub-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.todo-form input {
+  margin: 10px;
+  height: 30px;
+  width: 90%;
+  border: 1.5px solid rgb(110, 118, 118);
+}
+
+.todo-form input::placeholder {
+  color: gray;
+  opacity: 0.3;
+  font-style: italic;
+}
+
+.todo-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+p {
+  width: 100px;
+  border-bottom: 2px solid rgb(110, 118, 118);
+}
+
+.todo {
+  /* background-color: rgb(110, 118, 118); */
+
+  width: 50%;
+  height: 100vh;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+ul {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  display: flex;
+  flex-direction: column; /* 수직 방향으로 정렬하기 위해 column을 사용 */
+  justify-content: center; /* 수직 가운데 정렬 */
+  align-items: center;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid rgba(110, 118, 118, 0.319);
+  width: 50%;
+
+  padding: 10px;
+  margin: 10px;
+}
+
+button {
+  background-color: rgba(110, 118, 118, 0.319);
+  border-style: none;
+}

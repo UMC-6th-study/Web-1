@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="signup-wrapper">
+      <form class="signup-form">
+        <div class="signup-title">
+          <h1>회원가입</h1>
+        </div>
+        <div class="signup-items">
+          <!-- 예시 -->
+          <div class="item-wrapper">
+            <div class="item" id="name">
+              <div class="item-name">이름</div>
+              <input class="input" />
+              <p class="notice"></p>
+            </div>
+            <div class="item" id="email">
+              <div class="item-name">이메일</div>
+              <input class="input" />
+              <p class="notice"></p>
+            </div>
+            <div class="item" id="age">
+              <div class="item-name">나이</div>
+              <input class="input" />
+              <p class="notice"></p>
+            </div>
+            <div class="item" id="pw">
+              <div class="item-name">비밀번호</div>
+              <input class="input" type="password" />
+              <p class="notice"></p>
+            </div>
+            <div class="item" id="pw-check">
+              <div class="item-name">비밀번호 확인</div>
+              <input class="input" type="password" />
+              <p class="notice"></p>
+            </div>
+          </div>
+
+          <div class="modal-wrapper" style="display: none">
+            <div class="modal">
+              <div class="modal-content">가입성공!</div>
+              <p>UMC 가입을 축하합니다.</p>
+              <div class="close-wrapper">
+                <button id="close-btn">닫기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button id="join-button">가입하기</button>
+      </form>
+    </div>
+  </body>
+  <script src="./login.js"></script>
+</html>
