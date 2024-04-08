@@ -1,0 +1,55 @@
+body {
+  font-family: sans-serif;
+  background-color: #a9e2f3;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+}
+
+.join_box {
+  background-color: #e0f2f7;
+  width: 600px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  background-color: #e0f2f7;
+  border: solid 1.5px white;
+  border-radius: 4px;
+  width: 200px;
+  height: 20px;
+}
+
+.join_box p {
+  text-align: left;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+h2 {
+  margin: 10px;
+}
+
+.join_button {
+  margin-top: 25px;
+  width: 150px;
+  height: 25px;
+  background-color: gray;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+}
+
+.message {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
