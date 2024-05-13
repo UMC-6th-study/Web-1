@@ -1,0 +1,58 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  font-weight: bold;
+  background-color: midnightblue;
+}
+
+.movie {
+  background-color: rgba(182, 182, 220, 0.762);
+
+  margin: 10px;
+  border-radius: 5px;
+
+  /* width: 25%; */
+  position: relative;
+}
+
+.before-hover {
+  display: none;
+}
+
+.hover .overview {
+  display: block;
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  margin: 0;
+  text-overflow: ellipsis;
+
+  overflow-y: auto;
+  /* z-index: 1; */
+}
+.hover img {
+  opacity: 0.5;
+}
+
+.movie img {
+  width: 100%;
+}
+
+.movie .content {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 5px 10px 50px 10px;
+}
+.movie-container {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 한 줄에 4개의 열 */
+  gap: 10px; /* 열 간격 조정 */
+}
