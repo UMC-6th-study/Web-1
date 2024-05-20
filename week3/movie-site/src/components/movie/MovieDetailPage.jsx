@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import MoviewDetail from "./MovieDetail";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { over } from "lodash";
@@ -67,6 +67,8 @@ export default function MovieDetailPage() {
         <NotFound>
           <h2>Opps!</h2>
           <p>다시 검색해주세요!</p>
+
+          <StyledLink to={"/"}>메인으로 이동하기</StyledLink>
         </NotFound>
       );
     }
@@ -94,4 +96,12 @@ const NotFound = styled.div`
   h2 {
     font-size: 100px;
   }
+`;
+
+const StyledLink = styled(Link)`
+  display: inline;
+  padding: 4px 8px;
+  margin: 0 auto;
+  color: white;
+  text-decoration-line: none;
 `;
