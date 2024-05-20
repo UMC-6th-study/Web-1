@@ -12,7 +12,7 @@ function NowPlayingPage() {
     const nowplaying = "nowplaying";
     const nowPlaying = await getAPI(nowplaying);
     const data = nowPlaying.results;
-    console.log(data);
+    // console.log(data);
     setItems(data);
     setLoading(false);
   };

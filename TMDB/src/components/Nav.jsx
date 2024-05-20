@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -7,7 +8,6 @@ const NavContainer = styled.div`
 `;
 
 const Ul = styled.ul`
-  height: 60px;
   display: flex;
   position: absolute;
   top: 20px;
@@ -52,12 +52,7 @@ function Nav() {
 
       <Ul>
         <li>
-          <LiNavLink style={handleActive} to="login">
-            로그인
-          </LiNavLink>
-        </li>
-        <li>
-          <LiNavLink style={handleActive} to="join">
+          <LiNavLink style={handleActive} to="signup">
             회원가입
           </LiNavLink>
         </li>

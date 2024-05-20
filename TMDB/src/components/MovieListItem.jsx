@@ -4,8 +4,7 @@ import starIcon from "../assets/star.png";
 const Image = styled.img`
   height: 380px;
   margin-bottom: 10px;
-  /* object-fit: cover;
-  object-position: center; */
+  object-fit: cover;
 `;
 
 const ItemContainer = styled.div`
@@ -54,9 +53,9 @@ function MovieListItem({ item }) {
   return (
     <ItemContainer>
       <Image
-        src={`https://image.tmdb.org/t/p/w500${item.backdrop_path}`}
+        src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
         alt={item.original_title}
-      ></Image>
+      />
 
       <Description>
         <Title>{item.original_title}</Title>
