@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { over } from "lodash";
+import { styled } from "styled-components";
 
 export default function MovieDetailPage() {
   const { title } = useParams();
@@ -41,9 +42,17 @@ export default function MovieDetailPage() {
       .then((response) => response.json())
       .then((response) => {
         // 하나의 책만 오도록 임시처리
-        console.log(response.results[0]);
-        setLoading(false);
+        console.log(response);
+
+        if (response.results.length <= 0) {
+          setNotFound(true);
+          setLoading(false);
+
+          return;
+        }
         setNotFound(false);
+        setLoading(false);
+
         setMovie(response.results[0]);
       })
       .catch((err) => {
@@ -52,13 +61,14 @@ export default function MovieDetailPage() {
       .then(setNotFound(true));
   }, []);
 
-  useEffect(() => {
-    console.log(notFound), [notFound];
-  });
-
   function showComponent() {
     if (notFound) {
-      return <div style={{ fontSize: "400px", color: "yellow" }}>Opps</div>;
+      return (
+        <NotFound>
+          <h2>Opps!</h2>
+          <p>다시 검색해주세요!</p>
+        </NotFound>
+      );
     }
     return (
       <MoviewDetail
@@ -74,3 +84,14 @@ export default function MovieDetailPage() {
 
   return isLoading ? <div>Loading</div> : showComponent();
 }
+
+const NotFound = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  h2 {
+    font-size: 100px;
+  }
+`;

@@ -1,4 +1,4 @@
-import Movie from "./movie";
+import Movie from "./Movie";
 import { movies } from "./API_data";
 
 

@@ -25,7 +25,6 @@ export default function Movie({ props }) {
       className={`movie ${isHovering ? "hover" : ""} `}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
-      onClick={onClick}
     >
       <img
         src={`https://image.tmdb.org/t/p/original${poster_path}`}

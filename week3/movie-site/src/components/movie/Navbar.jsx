@@ -22,7 +22,13 @@ export default function Navbar() {
         setLogOut(!logout);
       },
     },
-    { to: "/popular", text: "Popular", click: () => {} },
+    {
+      to: "/popular",
+      text: "Popular",
+      click: () => {
+        console.log("nothing");
+      },
+    },
     { to: "/nowPlaying", text: "Now Playing", click: () => {} },
     { to: "/topRated", text: "Top Rated", click: () => {} },
     { to: "/upcoming", text: "Upcoming", click: () => {} },
