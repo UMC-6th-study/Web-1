@@ -1,0 +1,27 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import MainPage from './pages/MainPage';
+import PopularPage from './pages/PopularPage';
+import NowPlayingPage from './pages/NowPlayingPage';
+import TopRatedPage from './pages/TopRatedPage';
+import UpComingPage from './pages/UpComingPage';
+
+const App = () => {
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/popular" element={<PopularPage />} />
+        <Route path="/nowplaying" element={<NowPlayingPage />} />
+        <Route path="/toprated" element={<TopRatedPage />} />
+        <Route path="/upcoming" element={<UpComingPage />} />
+      </Routes>
+      <Footer />
+    </Router>
+  );
+};
+
+export default App;
