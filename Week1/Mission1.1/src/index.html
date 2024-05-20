@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>회원가입</title>
+  </head>
+  <body>
+    <div>
+      <div class="container">
+        <div class="join_box">
+          <h2 class="join">회원가입</h2>
+          <div class="name">
+            <p class="name_title">이름</p>
+            <input type="text" id="name_input" />
+            <p id="name_message" class="message"></p>
+          </div>
+          <!-- name -->
+          <div class="email">
+            <p class="email_title">이메일</p>
+            <input type="text" id="email_input" />
+            <p id="email_message" class="message"></p>
+          </div>
+          <!-- email -->
+          <div class="age">
+            <p class="age_title">나이</p>
+            <input type="text" id="age_input" />
+            <p id="age_message" class="message"></p>
+          </div>
+          <!-- age -->
+          <div class="pw">
+            <p class="pw_title">비밀번호</p>
+            <input type="text" id="pw_input" />
+            <p id="pw_message" class="message"></p>
+          </div>
+          <!-- pw -->
+          <div class="pw_check">
+            <p class="pw_check_title">비밀번호 확인</p>
+            <input type="text" id="pw_check_input" />
+            <p id="pw_check_message" class="message"></p>
+          </div>
+          <button class="join_button" id="join_button">가입하기</button>
+          <div class="model_wrapper" style="display: none">
+            <div class="modal">
+              <div class="modal_title">가입 성공!</div>
+              <p>umc 가입 성공!</p>
+              <div class="close_wrapper">
+                <button id="close_button">닫기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- join_box -->
+      </div>
+    </div>
+    <script src="style.css"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
