@@ -3,12 +3,29 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Navbar() {
+  const [logout, setLogOut] = useState(false);
+  const [stringVar, setStringVar] = useState("로그인");
+
+  useEffect(() => {
+    if (logout) {
+      setStringVar("로그아웃");
+    } else {
+      setStringVar("로그인");
+    }
+  }, [logout]);
+
   const navItems = [
-    { to: "/signup", text: "회원가입" },
-    { to: "/popular", text: "Popular" },
-    { to: "/nowPlaying", text: "Now Playing" },
-    { to: "/topRated", text: "Top Rated" },
-    { to: "/upcoming", text: "Upcoming" },
+    {
+      to: "/signup",
+      text: stringVar,
+      click: () => {
+        setLogOut(!logout);
+      },
+    },
+    { to: "/popular", text: "Popular", click: () => {} },
+    { to: "/nowPlaying", text: "Now Playing", click: () => {} },
+    { to: "/topRated", text: "Top Rated", click: () => {} },
+    { to: "/upcoming", text: "Upcoming", click: () => {} },
   ];
 
   return (
@@ -20,7 +37,9 @@ export default function Navbar() {
       <ul>
         {navItems.map((item, index) => (
           <li key={index}>
-            <StyledLink to={item.to}>{item.text}</StyledLink>
+            <StyledLink onClick={item.click} to={item.to}>
+              {item.text}
+            </StyledLink>
           </li>
         ))}
       </ul>

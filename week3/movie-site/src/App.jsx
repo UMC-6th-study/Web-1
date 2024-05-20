@@ -10,6 +10,7 @@ import NowPlayingPage from "./components/movie/NowPlayingPage";
 import TopRatedPage from "./components/movie/TopRatedPage";
 import UpcomingPage from "./components/movie/UpcomingPage";
 import Navbar from "./components/movie/Navbar";
+import MovieDetailPage from "./components/movie/MovieDetailPage";
 function App() {
   return (
     <>
@@ -21,6 +22,7 @@ function App() {
           <Route path="/nowPlaying" element={<NowPlayingPage />} />
           <Route path="/topRated" element={<TopRatedPage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
+          <Route path="/movie/:title" element={<MovieDetailPage />} />
         </Routes>
       </BrowserRouter>
       <footer>MakeusUMC</footer>

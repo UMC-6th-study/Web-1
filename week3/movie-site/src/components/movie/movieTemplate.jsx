@@ -1,6 +1,7 @@
 import Movie from "./movie";
 import { movies } from "./API_data";
 
+
 export default function MovieTemplate({ movieList }) {
   return (
     <div className="movie-container">
