@@ -62,10 +62,8 @@ function checkPWType(obj) {
     innerText = "비밀번호를 입력해주세요";
   } else if (obj.length < 4) {
     innerText = "4자리 수 이상이어야 합니다.";
-    console.log(innerText);
   } else if (obj.length > 12) {
     innerText = "12자리 수 이하이어야 합니다.";
-    console.log(innerText);
   } else innerText = "올바른 비밀번호 형식이 아닙니다.";
 
   return innerText;
@@ -131,7 +129,7 @@ export default function SignUpPage() {
 
           if (JSON.stringify(formData) === JSON.stringify(INIT_DATA)) {
             e.preventDefault();
-            console.log("Sdfsd");
+            setCheckAllComponent(true);
           }
         }}
       >
@@ -157,6 +155,7 @@ export default function SignUpPage() {
           pw={null}
           pwItem={false}
         />
+
         <SignUpItem
           name={"비밀번호"}
           checkFun={checkPWType}

@@ -1,23 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-/**
- *공백이 있는지를 검사하는 함수
- * @param obj
- * @returns
- */
-function noSpace(obj) {
-  // 공백사용못하게
-  const str_space = /^\s+|\s+$/g;
-
-  if (obj.value === "") return false;
-  if (str_space.exec(obj.value)) {
-    obj.focus();
-    obj.value = obj.value.replace(/\s| /gi, ""); // 공백제거
-  }
-  return true;
-}
-
 export default function SignUpItem({
   name,
   checkFun,
@@ -27,46 +10,50 @@ export default function SignUpItem({
 }) {
   const [notice, setNotice] = useState("");
 
+  // 비밀번호 확인 컴포넌트 일때
+  const onChangePWCheck = (pw, input) => {
+    setNotice(checkFun(pw, input));
+  };
+  // 비밀번호 컴포넌트 일때
+  const onChangePW = (input) => {
+    changeEvent(input);
+
+    setNotice(checkFun(input));
+
+    if (setNotice(checkFun(input)) === "") {
+      changeEvent(input);
+    }
+  };
+  // 그외의 컴포넌트 일때
+  const onChange = (input) => {
+    setNotice(checkFun(input));
+
+    // notice == "" 맞는 조건이라면 formData를 변경한다.
+    if (setNotice(checkFun(input)) === "") {
+      changeEvent(input);
+    }
+  };
+
+  // const [input, setInput ] = useState()
   return (
     <div>
       <Input
         type={!pwItem ? "" : "password"}
-        onSubmit={(e) => {
-          console.log("Sdfsd");
-          const input = e.target.value;
-          console(input);
-
-          // 비밀번호 입력란이라면
-          if (pwItem && pw === null) {
-            changeEvent(input);
-          } else if (pwItem) {
-            setNotice(checkFun(pw, input));
-            return;
-          }
-
-          setNotice(checkFun(input));
-
-          // notice == "" 맞는 조건이라면 formData를 변경한다.
-          if (setNotice(checkFun(input)) === "") {
-            changeEvent(input);
-          }
-        }}
         onChange={(e) => {
           const input = e.target.value;
 
           // 비밀번호 입력란이라면
           if (pwItem && pw === null) {
-            changeEvent(input);
+            onChangePW(input);
           } else if (pwItem) {
-            setNotice(checkFun(pw, input));
-            return;
-          }
-
-          setNotice(checkFun(input));
-
-          // notice == "" 맞는 조건이라면 formData를 변경한다.
-          if (setNotice(checkFun(input)) === "") {
-            changeEvent(input);
+            console.log("========\n");
+            console.log(pw);
+            console.log("========\n");
+            console.log(input);
+            console.log("========\n");
+            onChangePWCheck(pw, input);
+          } else {
+            onChange(input);
           }
         }}
         placeholder={`${name}을 입력해보세요`}
