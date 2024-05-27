@@ -17,7 +17,7 @@ export default function Navbar() {
   const navItems = [
     {
       to: "/signup",
-      text: stringVar,
+      text: "회원가입",
       click: () => {
         setLogOut(!logout);
       },

@@ -11,6 +11,7 @@ import TopRatedPage from "./components/movie/TopRatedPage";
 import UpcomingPage from "./components/movie/UpcomingPage";
 import Navbar from "./components/movie/Navbar";
 import MovieDetailPage from "./components/movie/MovieDetailPage";
+import SignUpPage from "./components/movie/SignUpPage";
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/signUp" element={<SignUpPage />} />
           <Route path="/popular" element={<PopularPage />} />
           <Route path="/nowPlaying" element={<NowPlayingPage />} />
           <Route path="/topRated" element={<TopRatedPage />} />

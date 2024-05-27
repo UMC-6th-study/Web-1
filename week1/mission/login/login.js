@@ -1,10 +1,25 @@
 const joinBtn = document.getElementById("join-button");
 const closeBtn = document.getElementById("close-btn");
 
+/**
+ *
+ * @param {*} itemId HTML의 ID
+ * @param {*} checkLogic 해당 태그와 관련된 유효성 체크 로직
+ */
 function getTag(itemId, checkLogic) {
   this.item = document.getElementById(itemId);
+
   this.input = this.item.querySelector(".input");
+  // item 내부에 있는 input 클래스
+
   this.notice = this.item.querySelector(".notice");
+  // item 내부에 있는 notice 클래스
+
+  /**
+   * 유효성 체크 메소드
+   * 해당 태그와 관련된 checkLogin 함수와 공백을 검사한다.
+   * @returns boolean
+   */
   this.check = // checkFunc
     function checkFun() {
       if (checkLogic(this.input, this.notice) && noSpace(this.input)) {
@@ -15,9 +30,9 @@ function getTag(itemId, checkLogic) {
       this.notice.style.color = "red";
       return false;
     };
-
-  // 수행되었는지 check 값 return
 }
+
+
 
 function submit(e) {
   e.preventDefault();
