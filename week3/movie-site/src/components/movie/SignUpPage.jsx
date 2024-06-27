@@ -108,72 +108,111 @@ export default function SignUpPage() {
     email: "",
     age: "",
     pw: "",
-    pwItem: "",
+    checkPw: "",
   };
   const [formData, setFormData] = useState(INIT_DATA);
 
   const [pw, setPw] = useState("");
 
-  const handleChange = (tagName, value) => {
+  const handleChange = (tagName, value, isValid) => {
     setFormData({
       ...formData,
       [tagName]: value,
     });
+
+    setCheckValid({
+      ...checkValid,
+      [tagName]: isValid,
+    });
   };
+
+  const INIT_VALIDATION_DATA = {
+    name: false,
+    email: false,
+    age: false,
+    pw: false,
+    checkPw: false,
+  };
+
+  const [checkValid, setCheckValid] = useState(INIT_VALIDATION_DATA);
+
+  // 한번 이상 제출 버튼을 눌렀는가 체크 변수
+  const [submitOneMore, setSubmitOneMore] = useState(false);
 
   return (
     <>
       <FormContainer
         onSubmit={(e) => {
           // 아무것도 없다면 제출 금지
+          e.preventDefault();
+          setSubmitOneMore(true);
 
-          if (JSON.stringify(formData) === JSON.stringify(INIT_DATA)) {
-            e.preventDefault();
-            setCheckAllComponent(true);
+          if (
+            checkValid.name &&
+            checkValid.email &&
+            checkValid.pw &&
+            checkValid.checkPw
+          ) {
+            console.log(formData);
+            console.log("회원가입 성공");
           }
         }}
       >
         <h1 style={{ margin: "10px" }}>회원가입 페이지 </h1>
         <SignUpItem
           name={"이름"}
+          id={"name"}
           checkFun={checkNameTypes}
-          changeEvent={(value) => handleChange("name", value)}
+          changeEvent={(value, isValid) => {
+            handleChange("name", value, isValid);
+          }}
           pw={null}
           pwItem={false}
+          submitOneMore={submitOneMore}
         />
         <SignUpItem
           name={"이메일"}
+          id={"email"}
           checkFun={checkEmailType}
-          changeEvent={(value) => handleChange("email", value)}
+          changeEvent={(value, isValid) =>
+            handleChange("email", value, isValid)
+          }
           pw={null}
           pwItem={false}
+          submitOneMore={submitOneMore}
         />
         <SignUpItem
           name={"나이"}
+          id={"age"}
           checkFun={checkAgeType}
-          changeEvent={(value) => handleChange("age", value)}
+          changeEvent={(value, isValid) => handleChange("age", value, isValid)}
           pw={null}
           pwItem={false}
+          submitOneMore={submitOneMore}
         />
 
         <SignUpItem
           name={"비밀번호"}
+          id={"pw"}
           checkFun={checkPWType}
-          changeEvent={(value) => {
-            handleChange("pw", value);
-            setPw(value);
+          changeEvent={(value, isValid) => {
+            handleChange("pw", value, isValid);
+            setPw(value, isValid);
           }}
           pw={null}
           pwItem={true}
+          submitOneMore={submitOneMore}
         />
         <SignUpItem
           name={"비밀번호 확인"}
+          id={"pwCheck"}
           checkFun={doubleCheckPW}
-          changeEvent={(value) => {
-            handleChange("checkPw", value);
+          changeEvent={(value, isValid) => {
+            handleChange("checkPw", value, isValid);
           }}
           pw={pw}
           pwItem={true}
+          submitOneMore={submitOneMore}
         />
         <Button>제출하기</Button>
       </FormContainer>
@@ -197,36 +236,3 @@ const Button = styled.button`
   width: 300px;
   height: 40px;
 `;
-
-// const itemList = [
-//   {
-//     idTag: "이름",
-//     checkLogic: () => {
-//       console.log("hey");
-//     },
-//   },
-//   {
-//     idTag: "이름",
-//     checkLogic: () => {
-//       console.log("hey");
-//     },
-//   },
-//   {
-//     idTag: "이름",
-//     checkLogic: () => {
-//       console.log("hey");
-//     },
-//   },
-//   {
-//     idTag: "이름",
-//     checkLogic: () => {
-//       console.log("hey");
-//     },
-//   },
-//   {
-//     idTag: "이름",
-//     checkLogic: () => {
-//       console.log("hey");
-//     },
-//   },
-// ];

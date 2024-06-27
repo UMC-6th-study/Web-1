@@ -3,25 +3,46 @@ import styled from "styled-components";
 
 export default function SignUpItem({
   name,
+  id,
   checkFun,
   changeEvent,
   pw,
   pwItem,
+  submitOneMore,
 }) {
+  const EMPTY_NOTICE = "";
   const [notice, setNotice] = useState("");
+  //input 값 공유를 위해
+  const [inputValue, setInputValue] = useState("");
+
+  // 한번 이상 타이핑을 하였는가
+  const [typingOneMore, setTypingOneMore] = useState(false);
+  const [needToCheck, setNeedToCheck] = useState(false);
+
+  useEffect(() => {
+    setNeedToCheck(submitOneMore || typingOneMore);
+  }, [submitOneMore, typingOneMore]);
+
+  // onChangePwcheck
+  // (체인지 이벤트로 걸어놓음) -> setNotice -> notice가 적힌다.
+  // notice는 이 컴포내부에서만 바뀔 수 있다.
 
   // 비밀번호 확인 컴포넌트 일때
   const onChangePWCheck = (pw, input) => {
     setNotice(checkFun(pw, input));
+
+    if (checkFun(pw, input) === "비밀번호 일치합니다.") {
+      changeEvent(input, true);
+    }
   };
   // 비밀번호 컴포넌트 일때
   const onChangePW = (input) => {
-    changeEvent(input);
+    changeEvent(input, false);
 
     setNotice(checkFun(input));
 
-    if (setNotice(checkFun(input)) === "") {
-      changeEvent(input);
+    if (checkFun(input) === EMPTY_NOTICE) {
+      changeEvent(input, true);
     }
   };
   // 그외의 컴포넌트 일때
@@ -29,32 +50,38 @@ export default function SignUpItem({
     setNotice(checkFun(input));
 
     // notice == "" 맞는 조건이라면 formData를 변경한다.
-    if (setNotice(checkFun(input)) === "") {
-      changeEvent(input);
+    if (checkFun(input) === EMPTY_NOTICE) {
+      changeEvent(input, true);
     }
   };
 
-  // const [input, setInput ] = useState()
+  const CheckLogic = (input, needToCheck) => {
+    // 비밀번호 입력란이라면
+    if (!needToCheck) return;
+    if (pwItem && pw === null) {
+      onChangePW(input);
+    } else if (pwItem) {
+      onChangePWCheck(pw, input);
+    } else {
+      onChange(input);
+    }
+  };
+
+  useEffect(() => {
+    console.log("checkLogic");
+    console.log(needToCheck);
+    CheckLogic(inputValue, needToCheck);
+  }, [needToCheck, inputValue]);
+
   return (
     <div>
       <Input
+        id={id}
         type={!pwItem ? "" : "password"}
         onChange={(e) => {
           const input = e.target.value;
-
-          // 비밀번호 입력란이라면
-          if (pwItem && pw === null) {
-            onChangePW(input);
-          } else if (pwItem) {
-            console.log("========\n");
-            console.log(pw);
-            console.log("========\n");
-            console.log(input);
-            console.log("========\n");
-            onChangePWCheck(pw, input);
-          } else {
-            onChange(input);
-          }
+          setTypingOneMore(true);
+          setInputValue(input);
         }}
         placeholder={`${name}을 입력해보세요`}
       ></Input>
@@ -67,11 +94,11 @@ const Input = styled.input`
 
   width: 300px;
   height: 40px;
-  margin: 5px;
+  margin: 8px;
   padding: 5px;
 `;
 
 const Notice = styled.p`
   color: red;
-  margin: 10px;
+  margin: 3px;
 `;
