@@ -1,15 +1,19 @@
 import styled from "styled-components";
 import Movie from "./Movie";
 import { useEffect, useState } from "react";
+import useDebounce from "../custom/useDebounce";
 
 export default function MainPage() {
   const [text, setText] = useState("");
+  const [empty, setEmpty] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [notice, setNotice] = useState("");
   const [movieList, setMovieList] = useState([]);
 
   /**
    * fetch함수
    */
-  const serachData = () => {
+  const searchData = (queryString) => {
     const options = {
       method: "GET",
       headers: {
@@ -19,28 +23,41 @@ export default function MainPage() {
       },
     };
     fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${text}&include_adult=false&language=en-US&page=1`,
+      `https://api.themoviedb.org/3/search/movie?query=${queryString}&include_adult=false&language=en-US&page=1`,
       options
     )
       .then((response) => response.json())
       .then((response) => {
-        console.log(response.results);
+        setLoading(false);
         setMovieList(response.results);
       })
       .catch((err) => console.error(err));
   };
 
   const onChange = (e) => {
-    setText(e.target.value);
-  };
+    const input = e.target.value;
+    setText(input);
+    setLoading(true);
 
-  useEffect(() => serachData(), [text]);
+    if (input === "") {
+      setEmpty(true);
+      return;
+    }
+    setEmpty(false);
+  };
 
   //검색 버튼 눌렀을시에만 검색하기 위해 미리 만들어놓음
   const onSubmit = (e) => {
     e.preventDefault();
   };
 
+  const queryString = useDebounce(text, 2000);
+
+  //after Debounce
+  useEffect(() => {
+    setLoading(false);
+    searchData(queryString);
+  }, [queryString]);
   return (
     <MainPageBody id="main-page" navHeight={50} footerHeight={30}>
       <Welcome>환영합니다.</Welcome>
@@ -51,14 +68,18 @@ export default function MainPage() {
           <button>🔎</button>
         </div>
 
-        {!movieList.length ? (
+        {empty ? (
           ""
+        ) : loading ? (
+          // <Notice>로딩중입니다.</Notice>
+          <Notice>로딩중입니다.</Notice>
+        ) : !movieList.length ? (
+          <Notice>검색결과가 없습니다.</Notice>
         ) : (
           <MovieTempalte>
-            {" "}
             {movieList.map((movie) => (
               <Movie key={movie.id} props={movie} />
-            ))}{" "}
+            ))}
           </MovieTempalte>
         )}
       </Search>
@@ -85,8 +106,12 @@ const Welcome = styled.div`
 
 const MovieTempalte = styled.div`
   display: grid;
-  box-sizing: content-box;
+  place-items: center;
   grid-template-columns: repeat(4, 1fr);
+
+  box-sizing: content-box;
+
+  color: white;
 
   height: 500px;
   width: 60%;
@@ -111,7 +136,6 @@ const MovieTempalte = styled.div`
 
 const Search = styled.form`
   display: flex;
-
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -139,4 +163,10 @@ const Search = styled.form`
     font-size: 30px;
     border-radius: 20px;
   }
+`;
+
+const Notice = styled(MovieTempalte)`
+  display: flex;
+  justify-content: center;
+  align-content: center;
 `;
