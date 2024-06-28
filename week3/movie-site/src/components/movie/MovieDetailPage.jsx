@@ -7,9 +7,8 @@ import { over } from "lodash";
 import { styled } from "styled-components";
 
 export default function MovieDetailPage() {
-  const { title } = useParams();
+  const { id } = useParams();
 
-  const location = useLocation();
   const nullData = {
     backdrop_path: "",
     poster_path: "",
@@ -22,8 +21,14 @@ export default function MovieDetailPage() {
   const [notFound, setNotFound] = useState(true);
   const [isLoading, setLoading] = useState(true);
 
-  const { backdrop_path, poster_path, vote_average, release_date, overview } =
-    nowMovie;
+  const {
+    backdrop_path,
+    poster_path,
+    vote_average,
+    release_date,
+    overview,
+    original_title,
+  } = nowMovie;
 
   const options = {
     method: "GET",
@@ -35,25 +40,22 @@ export default function MovieDetailPage() {
   };
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${title}&include_adult=false&language=en-US&page=1`,
-      options
-    )
+    fetch(`https://api.themoviedb.org/3/movie/${id}?language=ko`, options)
       .then((response) => response.json())
       .then((response) => {
         // 하나의 책만 오도록 임시처리
         console.log(response);
 
-        if (response.results.length <= 0) {
+        if (response.success === false) {
           setNotFound(true);
           setLoading(false);
-
           return;
         }
+
         setNotFound(false);
         setLoading(false);
 
-        setMovie(response.results[0]);
+        setMovie(response);
       })
       .catch((err) => {
         console.error(err);
@@ -72,16 +74,7 @@ export default function MovieDetailPage() {
         </NotFound>
       );
     }
-    return (
-      <MoviewDetail
-        title={title}
-        vote_average={vote_average}
-        release_date={release_date}
-        overview={overview}
-        backdrop_path={backdrop_path}
-        poster_path={poster_path}
-      />
-    );
+    return <MoviewDetail elem={nowMovie} />;
   }
 
   return isLoading ? <div>Loading</div> : showComponent();

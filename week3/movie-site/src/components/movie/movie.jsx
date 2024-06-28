@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function Movie({ props }) {
   const [isHovering, setHover] = useState(false);
-  const { poster_path, title, vote_average, overview } = props;
+  const { poster_path, title, vote_average, overview, id } = props;
+  const navigate = useNavigate();
 
   const handleMouseOver = () => {
     setHover(true);
@@ -13,11 +14,17 @@ export default function Movie({ props }) {
     setHover(false);
   };
 
+  const onClick = () => {
+    console.log("clicked");
+    navigate(`/movie/${id}`);
+  };
+
   return (
     <div
       className={`movie ${isHovering ? "hover" : ""} `}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      onClick={onClick}
     >
       <img
         src={`https://image.tmdb.org/t/p/original${poster_path}`}

@@ -3,7 +3,6 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
-import MovieTemplate from "./components/movie/movieTemplate";
 import MainPage from "./components/movie/MainPage";
 import PopularPage from "./components/movie/PopularPage";
 import NowPlayingPage from "./components/movie/NowPlayingPage";
@@ -24,7 +23,8 @@ function App() {
           <Route path="/nowPlaying" element={<NowPlayingPage />} />
           <Route path="/topRated" element={<TopRatedPage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
-          <Route path="/movie/:title" element={<MovieDetailPage />} />
+          {/* <Route path="/movie/:title" element={<MovieDetailPage />} /> */}
+          <Route path="/movie/:id" element={<MovieDetailPage />} />
         </Routes>
         <footer>MakeusUMC</footer>
       </BrowserRouter>

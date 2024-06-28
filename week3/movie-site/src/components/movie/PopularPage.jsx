@@ -15,7 +15,7 @@ export default function PopularPage() {
     };
 
     fetch(
-      "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=bb1df178e97b164a2030d36e49401f46",
+      "https://api.themoviedb.org/3/movie/popular?language=ko&page=1&api_key=bb1df178e97b164a2030d36e49401f46",
       options
     )
       .then((response) => response.json())

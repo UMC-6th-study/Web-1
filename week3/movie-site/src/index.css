@@ -75,12 +75,12 @@ ul {
 }
 
 .hover .overview p {
-  /* background-color: rgba(0, 0, 0, 0.8); */
+  font-size: 15px;
+  height: 100%;
   display: block;
   text-overflow: ellipsis;
-
   overflow: hidden;
-  white-space: nowrap;
+  white-space: wrap;
 }
 .hover img {
   opacity: 0.5;

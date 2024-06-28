@@ -23,13 +23,15 @@ export default function MainPage() {
       },
     };
     fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${queryString}&include_adult=false&language=en-US&page=1`,
+      `https://api.themoviedb.org/3/search/movie?query=${queryString}&include_adult=false&language=ko&page=1`,
       options
     )
       .then((response) => response.json())
       .then((response) => {
-        setLoading(false);
         setMovieList(response.results);
+        setLoading(false);
+
+        console.log(response.results);
       })
       .catch((err) => console.error(err));
   };
@@ -59,7 +61,7 @@ export default function MainPage() {
     searchData(queryString);
   }, [queryString]);
   return (
-    <MainPageBody id="main-page" navHeight={50} footerHeight={30}>
+    <MainPageBody id="main-page">
       <Welcome>환영합니다.</Welcome>
       <Search onSubmit={onSubmit}>
         <h2> Find your movies!</h2>
@@ -71,7 +73,6 @@ export default function MainPage() {
         {empty ? (
           ""
         ) : loading ? (
-          // <Notice>로딩중입니다.</Notice>
           <Notice>로딩중입니다.</Notice>
         ) : !movieList.length ? (
           <Notice>검색결과가 없습니다.</Notice>
@@ -88,10 +89,10 @@ export default function MainPage() {
 }
 
 const MainPageBody = styled.div`
-  min-height: calc(
+  /* min-height: calc(
     100% - ${(props) => props.navHeight}px - ${(props) => props.footerHeight}px
-  );
-  /* height: 100%; */
+  ); */
+  min-height: 100%;
 `;
 
 const Welcome = styled.div`
@@ -106,11 +107,8 @@ const Welcome = styled.div`
 
 const MovieTempalte = styled.div`
   display: grid;
-  place-items: center;
   grid-template-columns: repeat(4, 1fr);
-
   box-sizing: content-box;
-
   color: white;
 
   height: 500px;
