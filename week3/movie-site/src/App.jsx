@@ -26,8 +26,8 @@ function App() {
           <Route path="/upcoming" element={<UpcomingPage />} />
           <Route path="/movie/:title" element={<MovieDetailPage />} />
         </Routes>
+        <footer>MakeusUMC</footer>
       </BrowserRouter>
-      <footer>MakeusUMC</footer>
     </>
   );
 }

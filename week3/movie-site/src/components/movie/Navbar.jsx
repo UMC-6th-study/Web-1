@@ -35,8 +35,8 @@ export default function Navbar() {
   ];
 
   return (
-    <Nav>
-      <Link to={"/popular"}>
+    <Nav height="50px">
+      <Link to={"/"}>
         <p>UMC Movie</p>
       </Link>
 
@@ -54,8 +54,11 @@ export default function Navbar() {
 }
 
 const Nav = styled.nav`
-  height: 50px;
+  height: ${(props) => props.height};
   color: white;
+  background-color: rgb(6, 6, 73);
+  display: flex;
+  flex-direction: row;
 
   a {
     text-decoration-line: none;

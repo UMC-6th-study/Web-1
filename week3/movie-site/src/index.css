@@ -23,11 +23,11 @@ body {
   color: white;
 }
 
-footer,
-nav {
+footer {
   background-color: rgb(6, 6, 73);
   display: flex;
   flex-direction: row;
+  height: 30px;
 }
 ul li {
   display: inline;
@@ -36,9 +36,6 @@ ul {
   margin-left: auto;
 }
 
-.main-page {
-  height: 90%;
-}
 .movie-container {
   display: grid;
 

@@ -13,13 +13,6 @@ export default function Movie({ props }) {
     setHover(false);
   };
 
-  // const onClick = () => {
-  //   const navigate = useNavigate();
-  //   navigate("/movie/", {
-  //     state: props,
-  //   });
-  // };
-
   return (
     <div
       className={`movie ${isHovering ? "hover" : ""} `}
