@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import SignUpItem from "./SignUpItem";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /**
  * 1. 동일한 input + notice div 스타일 컴포넌트를 만든다.
@@ -27,6 +29,14 @@ function noSpace(obj) {
 
 function checkNameTypes(obj) {
   // 한번더 사용,,,
+  function noSpace(obj) {
+    const whitespaceRegex = /\s/;
+
+    if ((obj === "") | whitespaceRegex.test(obj)) return false;
+
+    return true;
+  }
+
   if (noSpace(obj)) {
     return "";
   }
@@ -105,6 +115,7 @@ function doubleCheckPW(pw, obj) {
 export default function SignUpPage() {
   const INIT_DATA = {
     name: "",
+    id: "",
     email: "",
     age: "",
     pw: "",
@@ -113,6 +124,7 @@ export default function SignUpPage() {
   const [formData, setFormData] = useState(INIT_DATA);
 
   const [pw, setPw] = useState("");
+  const useNavigation = useNavigate();
 
   const handleChange = (tagName, value, isValid) => {
     setFormData({
@@ -128,6 +140,7 @@ export default function SignUpPage() {
 
   const INIT_VALIDATION_DATA = {
     name: false,
+    id: false,
     email: false,
     age: false,
     pw: false,
@@ -162,6 +175,17 @@ export default function SignUpPage() {
         <SignUpItem
           name={"이름"}
           id={"name"}
+          checkFun={checkNameTypes}
+          changeEvent={(value, isValid) => {
+            handleChange("name", value, isValid);
+          }}
+          pw={null}
+          pwItem={false}
+          submitOneMore={submitOneMore}
+        />
+        <SignUpItem
+          name={"아이디"}
+          id={"id"}
           checkFun={checkNameTypes}
           changeEvent={(value, isValid) => {
             handleChange("name", value, isValid);
@@ -215,12 +239,23 @@ export default function SignUpPage() {
           submitOneMore={submitOneMore}
         />
         <Button>제출하기</Button>
+        <Container>
+          <p>이미 아이디가 있으신가요?</p>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              useNavigation("/login");
+            }}
+          >
+            로그인 페이지로 이동하기
+          </button>
+        </Container>
       </FormContainer>
     </>
   );
 }
 
-const FormContainer = styled.form`
+export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -230,9 +265,28 @@ const FormContainer = styled.form`
   /* background: white; */
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   border-radius: 20px;
 
   width: 300px;
   height: 40px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  gap: 10px;
+  padding-top: 30px;
+
+  justify-content: center;
+  p {
+    font-weight: 300;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    font-size: large;
+    font-weight: 700;
+    color: white;
+  }
 `;

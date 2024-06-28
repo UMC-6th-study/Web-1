@@ -11,6 +11,8 @@ import UpcomingPage from "./components/movie/UpcomingPage";
 import Navbar from "./components/movie/Navbar";
 import MovieDetailPage from "./components/movie/MovieDetailPage";
 import SignUpPage from "./components/movie/SignUpPage";
+
+import LoginPage from "./components/movie/LoginPage";
 function App() {
   return (
     <>
@@ -23,8 +25,9 @@ function App() {
           <Route path="/nowPlaying" element={<NowPlayingPage />} />
           <Route path="/topRated" element={<TopRatedPage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
-          {/* <Route path="/movie/:title" element={<MovieDetailPage />} /> */}
+
           <Route path="/movie/:id" element={<MovieDetailPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
         <footer>MakeusUMC</footer>
       </BrowserRouter>
