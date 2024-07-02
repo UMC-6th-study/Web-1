@@ -68,8 +68,6 @@ export default function SignUpItem({
   };
 
   useEffect(() => {
-    console.log("checkLogic");
-    console.log(needToCheck);
     CheckLogic(inputValue, needToCheck);
   }, [needToCheck, inputValue]);
 

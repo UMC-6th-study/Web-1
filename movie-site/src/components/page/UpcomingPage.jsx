@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MovieTemplate from "./movieTemplate";
+import MovieTemplate from "item/movieTemplate";
 
 export default function UpcomingPage() {
   const [movies, setMovies] = useState(null);
@@ -19,9 +19,11 @@ export default function UpcomingPage() {
       options
     )
       .then((response) => response.json())
-      .then((response) => setMovies(response.results))
+      .then((response) => {
+        setMovies(response.results);
+      })
       .catch((err) => console.error(err));
-  }, [movies]); // Empty dependency array means this effect runs once after the component mounts
+  }, []);
 
   return <>{movies ? <MovieTemplate movieList={movies} /> : "Loading..."}</>;
 }

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import SignUpItem from "./SignUpItem";
-import { Link } from "react-router-dom";
+import SignUpItem from "item/SignUpItem";
 import { useNavigate } from "react-router-dom";
 
 /**
@@ -51,7 +50,6 @@ function checkEmailType(obj) {
   }
 
   if (!noSpace(obj)) {
-    console.log(obj);
     innerText = "이메일을 입력해주세요";
     return innerText;
   }

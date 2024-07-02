@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
-import Info from "./credit/Info";
+import Info from "./Info";
 
 export default function MoviewDetail({ elem }) {
   const [castInfoList, setCastInfoList] = useState([]);

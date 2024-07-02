@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import MoviewDetail from "./MovieDetail";
+import MoviewDetail from "item/MovieDetail";
 import { Link, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { over } from "lodash";
+
 import { styled } from "styled-components";
 
 export default function MovieDetailPage() {

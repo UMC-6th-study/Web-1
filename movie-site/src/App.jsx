@@ -1,18 +1,14 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import MainPage from "page/MainPage";
+import SignUpPage from "page/SignUpPage";
+import PopularPage from "page/PopularPage";
+import NowPlayingPage from "page/NowPlayingPage";
+import TopRatedPage from "page/TopRatedPage";
+import UpcomingPage from "page/UpcomingPage";
+import Navbar from "item/Navbar";
+import MovieDetailPage from "page/MovieDetailPage";
+import LoginPage from "page/LoginPage";
 
-import MainPage from "./components/movie/MainPage";
-import PopularPage from "./components/movie/PopularPage";
-import NowPlayingPage from "./components/movie/NowPlayingPage";
-import TopRatedPage from "./components/movie/TopRatedPage";
-import UpcomingPage from "./components/movie/UpcomingPage";
-import Navbar from "./components/movie/Navbar";
-import MovieDetailPage from "./components/movie/MovieDetailPage";
-import SignUpPage from "./components/movie/SignUpPage";
-
-import LoginPage from "./components/movie/LoginPage";
 function App() {
   return (
     <>

@@ -1,5 +1,5 @@
-import { FormContainer } from "./SignUpPage";
-import SignUpItem from "./SignUpItem";
+import { FormContainer } from "components/page/SignUpPage";
+import SignUpItem from "components/item/SignUpItem";
 
 export default function LoginPage() {
   // 한번 이상 제출 버튼을 눌렀는가 체크 변수

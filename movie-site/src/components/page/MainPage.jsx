@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import Movie from "./Movie";
+import Movie from "item/Movie";
 import { useEffect, useState } from "react";
-import useDebounce from "../custom/useDebounce";
+import useDebounce from "custom/useDebounce";
 
 export default function MainPage() {
   const [text, setText] = useState("");
   const [empty, setEmpty] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [notice, setNotice] = useState("");
   const [movieList, setMovieList] = useState([]);
 
   /**
@@ -60,6 +59,7 @@ export default function MainPage() {
     setLoading(false);
     searchData(queryString);
   }, [queryString]);
+
   return (
     <MainPageBody id="main-page">
       <Welcome>환영합니다.</Welcome>
