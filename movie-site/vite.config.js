@@ -12,6 +12,10 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "./src/components/page/"),
       },
       {
+        find: "public",
+        replacement: path.resolve(__dirname, "./public"),
+      },
+      {
         find: "item",
         replacement: path.resolve(__dirname, "./src/components/item/"),
       },

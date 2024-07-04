@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import MovieTemplate from "item/movieTemplate";
+import PaginationBar from "item/PaginationBar";
 
 export default function PopularPage() {
   const [movies, setMovies] = useState(null);
+  const [pageNum, setPageNum] = useState(1);
 
   useEffect(() => {
     const options = {
@@ -15,16 +17,20 @@ export default function PopularPage() {
     };
 
     fetch(
-      "https://api.themoviedb.org/3/movie/popular?language=ko&page=1&api_key=bb1df178e97b164a2030d36e49401f46",
+      `https://api.themoviedb.org/3/movie/popular?language=ko&page=${pageNum}&api_key=bb1df178e97b164a2030d36e49401f46`,
       options
     )
       .then((response) => response.json())
       .then((response) => {
-        console.log(response.results);
         setMovies(response.results);
       })
       .catch((err) => console.error(err));
-  }, []); // Empty dependency array means this effect runs once after the component mounts
+  }, [pageNum]);
 
-  return <>{movies ? <MovieTemplate movieList={movies} /> : "Loading..."}</>;
+  return (
+    <>
+      {movies ? <MovieTemplate movieList={movies} /> : "Loading..."}
+      <PaginationBar setPageNum={setPageNum} pageNum={pageNum} />
+    </>
+  );
 }

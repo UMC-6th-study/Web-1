@@ -1,25 +1,27 @@
-import { FormContainer } from "components/page/SignUpPage";
 import SignUpItem from "components/item/SignUpItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+
+function noSpace(obj) {
+  const whitespaceRegex = /\s/;
+
+  if ((obj === "") | whitespaceRegex.test(obj)) return false;
+
+  return true;
+}
 
 export default function LoginPage() {
+  const [pw, setPw] = useState("");
+
   // 한번 이상 제출 버튼을 눌렀는가 체크 변수
   const [submitOneMore, setSubmitOneMore] = useState(false);
 
-  function checkNameTypes(obj) {
-    // 한번더 사용,,,
-    function noSpace(obj) {
-      const whitespaceRegex = /\s/;
-
-      if ((obj === "") | whitespaceRegex.test(obj)) return false;
-
-      return true;
-    }
-
+  function checkIdTypes(obj) {
     if (noSpace(obj)) {
       return "";
     }
-    const innerText = "필수입력 항목입니다!";
+
+    const innerText = "아이디를 입력해주세요!";
     return innerText;
   }
 
@@ -54,6 +56,7 @@ export default function LoginPage() {
 
   const [checkValid, setCheckValid] = useState(INIT_VALIDATION_DATA);
   const [formData, setFormData] = useState(INIT_DATA);
+  const [btnColor, setBtnColor] = useState("white");
 
   const handleChange = (tagName, value, isValid) => {
     setFormData({
@@ -66,6 +69,16 @@ export default function LoginPage() {
       [tagName]: isValid,
     });
   };
+
+  useEffect(() => {
+    if (checkValid.id && checkValid.pw) {
+      setBtnColor("#ffe100");
+      return;
+    }
+
+    setBtnColor("white");
+  }, [checkValid]);
+
   return (
     <>
       <FormContainer
@@ -85,9 +98,9 @@ export default function LoginPage() {
         <SignUpItem
           name={"아이디"}
           id={"id"}
-          checkFun={checkNameTypes}
+          checkFun={checkIdTypes}
           changeEvent={(value, isValid) => {
-            handleChange("name", value, isValid);
+            handleChange("id", value, isValid);
           }}
           pw={null}
           pwItem={false}
@@ -107,8 +120,27 @@ export default function LoginPage() {
           submitOneMore={submitOneMore}
         />
 
-        <Button>제출하기</Button>
+        <Button color={btnColor}>제출하기</Button>
       </FormContainer>
     </>
   );
 }
+
+const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  margin: auto 0;
+  height: 100%;
+  margin-top: 40px;
+`;
+
+export const Button = styled.button`
+  border-radius: 20px;
+  background-color: ${(props) => props.color};
+  border-color: transparent;
+  width: 300px;
+  height: 40px;
+  margin-top: 30px;
+`;

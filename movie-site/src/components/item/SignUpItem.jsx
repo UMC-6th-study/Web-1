@@ -97,7 +97,8 @@ const Input = styled.input`
 `;
 
 const Notice = styled.p`
-  /* font-size: 30px; */
+  font-size: 13px;
   color: red;
   margin: 3px;
+  padding-left: 10px;
 `;

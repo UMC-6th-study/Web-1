@@ -15,7 +15,6 @@ export default function Movie({ props }) {
   };
 
   const onClick = () => {
-    console.log("clicked");
     navigate(`/movie/${id}`);
   };
 
@@ -36,7 +35,7 @@ export default function Movie({ props }) {
 
       <div className="content">
         <span>{title}</span>
-        <span>{vote_average}</span>
+        <span>⭐️{vote_average}</span>
       </div>
     </div>
   );

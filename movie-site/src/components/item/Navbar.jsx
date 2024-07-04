@@ -16,11 +16,16 @@ export default function Navbar() {
 
   const navItems = [
     {
-      to: "/signup",
-      text: "회원가입",
+      to: "/login",
+      text: `로그인`,
       click: () => {
         setLogOut(!logout);
       },
+    },
+    {
+      to: "/signup",
+      text: "회원가입",
+      click: () => {},
     },
     {
       to: "/popular",

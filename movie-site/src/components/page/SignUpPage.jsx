@@ -27,19 +27,19 @@ function noSpace(obj) {
 }
 
 function checkNameTypes(obj) {
-  // 한번더 사용,,,
-  function noSpace(obj) {
-    const whitespaceRegex = /\s/;
-
-    if ((obj === "") | whitespaceRegex.test(obj)) return false;
-
-    return true;
-  }
-
   if (noSpace(obj)) {
     return "";
   }
   const innerText = "필수입력 항목입니다!";
+  return innerText;
+}
+
+function checkIdTypes(obj) {
+  if (noSpace(obj)) {
+    return "";
+  }
+
+  const innerText = "아이디를 입력해주세요!";
   return innerText;
 }
 
@@ -123,6 +123,7 @@ export default function SignUpPage() {
 
   const [pw, setPw] = useState("");
   const useNavigation = useNavigate();
+  const [btnColor, setBtnColor] = useState("white");
 
   const handleChange = (tagName, value, isValid) => {
     setFormData({
@@ -149,6 +150,23 @@ export default function SignUpPage() {
 
   // 한번 이상 제출 버튼을 눌렀는가 체크 변수
   const [submitOneMore, setSubmitOneMore] = useState(false);
+
+  /**
+   * 조건 만족할 시 button background 색깔 변경
+   */
+  useEffect(() => {
+    if (
+      checkValid.name &&
+      checkValid.email &&
+      checkValid.pw &&
+      checkValid.checkPw
+    ) {
+      setBtnColor("#ffe100");
+      return;
+    }
+
+    setBtnColor("white");
+  }, [checkValid]);
 
   return (
     <>
@@ -184,9 +202,9 @@ export default function SignUpPage() {
         <SignUpItem
           name={"아이디"}
           id={"id"}
-          checkFun={checkNameTypes}
+          checkFun={checkIdTypes}
           changeEvent={(value, isValid) => {
-            handleChange("name", value, isValid);
+            handleChange("id", value, isValid);
           }}
           pw={null}
           pwItem={false}
@@ -236,7 +254,7 @@ export default function SignUpPage() {
           pwItem={true}
           submitOneMore={submitOneMore}
         />
-        <Button>제출하기</Button>
+        <Button color={btnColor}>제출하기</Button>
         <Container>
           <p>이미 아이디가 있으신가요?</p>
           <button
@@ -263,9 +281,11 @@ export const FormContainer = styled.form`
 
 export const Button = styled.button`
   border-radius: 20px;
-
+  background-color: ${(props) => props.color};
+  border-color: transparent;
   width: 300px;
   height: 40px;
+  margin-top: 30px;
 `;
 
 const Container = styled.div`

@@ -120,7 +120,6 @@ export default function MoviewDetail({ elem }) {
         <CrewContainer>
           {crewInfoList.map((elem) => {
             const { profile_path, name, original_name } = elem;
-            console.log(elem);
 
             return (
               <Info
