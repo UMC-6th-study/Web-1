@@ -259,8 +259,6 @@ export const FormContainer = styled.form`
   align-items: center;
   justify-content: center;
   height: 100%;
-
-  /* background: white; */
 `;
 
 export const Button = styled.button`
