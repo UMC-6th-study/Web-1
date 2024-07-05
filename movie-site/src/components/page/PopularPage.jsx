@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MovieTemplate from "item/movieTemplate";
 import PaginationBar from "item/PaginationBar";
+import LoaderSpinner from "item/LoaderSpinner";
 
 export default function PopularPage() {
   const [movies, setMovies] = useState(null);
@@ -29,7 +30,7 @@ export default function PopularPage() {
 
   return (
     <>
-      {movies ? <MovieTemplate movieList={movies} /> : "Loading..."}
+      {movies ? <MovieTemplate movieList={movies} /> : <LoaderSpinner />}
       <PaginationBar setPageNum={setPageNum} pageNum={pageNum} />
     </>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import MovieTemplate from "item/movieTemplate";
+import LoaderSpinner from "item/LoaderSpinner";
 
 export default function TopRatedPage() {
   const [movies, setMovies] = useState(null);
@@ -25,5 +26,7 @@ export default function TopRatedPage() {
       .catch((err) => console.error(err));
   }, [movies]);
 
-  return <>{movies ? <MovieTemplate movieList={movies} /> : "Loading..."}</>;
+  return (
+    <>{movies ? <MovieTemplate movieList={movies} /> : <LoaderSpinner />}</>
+  );
 }

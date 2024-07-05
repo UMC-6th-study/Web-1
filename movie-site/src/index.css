@@ -19,7 +19,7 @@ body {
 }
 body {
   font-weight: bold;
-  background-color: midnightblue;
+  background-color: rgba(7, 7, 92, 0.973);
   color: white;
 }
 
@@ -47,11 +47,16 @@ ul {
 }
 
 .movie {
-  background-color: rgba(182, 182, 220, 0.762);
+  background-color: rgb(57, 57, 136);
+  min-height: 373px;
 
   border-radius: 5px;
   position: relative;
   box-sizing: content-box;
+}
+.movie img {
+  min-height: 80%;
+  height: 80%;
 }
 
 .before-hover {
