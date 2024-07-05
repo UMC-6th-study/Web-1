@@ -57,7 +57,7 @@ function checkEmailType(obj) {
   return innerText;
 }
 
-function checkPWType(obj) {
+function checkpasswordType(obj) {
   let innerText;
   const regex =
     /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~@#$!%*?&])[a-zA-Z\d~@#$!%*?&]{4,12}$/;
@@ -97,15 +97,15 @@ function checkAgeType(obj) {
   return innerText;
 }
 
-function doubleCheckPW(pw, obj) {
+function doubleCheckpassword(password, obj) {
   let innerText;
-  if (obj === pw) {
+  if (obj === password) {
     innerText = "비밀번호 일치합니다.";
     return innerText;
   }
   innerText = "비밀번호 일치하지 않습니다.";
   return innerText;
-  // pw input창 value 같은지 확인해야함
+  // password input창 value 같은지 확인해야함
 }
 
 // formData 초기값 데이터가 ""인지를 체크 => 아니라면 변화 유
@@ -113,15 +113,15 @@ function doubleCheckPW(pw, obj) {
 export default function SignUpPage() {
   const INIT_DATA = {
     name: "",
-    id: "",
+    username: "",
     email: "",
     age: "",
-    pw: "",
-    checkPw: "",
+    password: "",
+    passwordCheck: "",
   };
   const [formData, setFormData] = useState(INIT_DATA);
 
-  const [pw, setPw] = useState("");
+  const [password, setpassword] = useState("");
   const useNavigation = useNavigate();
   const [btnColor, setBtnColor] = useState("white");
 
@@ -139,11 +139,11 @@ export default function SignUpPage() {
 
   const INIT_VALIDATION_DATA = {
     name: false,
-    id: false,
+    username: false,
     email: false,
     age: false,
-    pw: false,
-    checkPw: false,
+    password: false,
+    passwordCheck: false,
   };
 
   const [checkValid, setCheckValid] = useState(INIT_VALIDATION_DATA);
@@ -158,8 +158,8 @@ export default function SignUpPage() {
     if (
       checkValid.name &&
       checkValid.email &&
-      checkValid.pw &&
-      checkValid.checkPw
+      checkValid.password &&
+      checkValid.passwordCheck
     ) {
       setBtnColor("#ffe100");
       return;
@@ -168,25 +168,48 @@ export default function SignUpPage() {
     setBtnColor("white");
   }, [checkValid]);
 
+  const onSubmit = (e) => {
+    // 아무것도 없다면 제출 금지
+    e.preventDefault();
+    setSubmitOneMore(true);
+
+    if (
+      checkValid.name &&
+      checkValid.email &&
+      checkValid.password &&
+      checkValid.passwordCheck
+    ) {
+      console.log(formData);
+      fetchData();
+    }
+  };
+
+  const fetchData = () => {
+    fetch("http://localhost:8080/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => {
+        // if (res.status >= 400) {
+        //   throw new Error(`status: ${res.status}`);
+        // }
+
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <>
-      <FormContainer
-        onSubmit={(e) => {
-          // 아무것도 없다면 제출 금지
-          e.preventDefault();
-          setSubmitOneMore(true);
-
-          if (
-            checkValid.name &&
-            checkValid.email &&
-            checkValid.pw &&
-            checkValid.checkPw
-          ) {
-            console.log(formData);
-            console.log("회원가입 성공");
-          }
-        }}
-      >
+      <FormContainer onSubmit={onSubmit}>
         <h1 style={{ margin: "10px" }}>회원가입 페이지 </h1>
         <SignUpItem
           name={"이름"}
@@ -195,19 +218,19 @@ export default function SignUpPage() {
           changeEvent={(value, isValid) => {
             handleChange("name", value, isValid);
           }}
-          pw={null}
-          pwItem={false}
+          password={null}
+          passwordItem={false}
           submitOneMore={submitOneMore}
         />
         <SignUpItem
           name={"아이디"}
-          id={"id"}
+          id={"username"}
           checkFun={checkIdTypes}
           changeEvent={(value, isValid) => {
-            handleChange("id", value, isValid);
+            handleChange("username", value, isValid);
           }}
-          pw={null}
-          pwItem={false}
+          password={null}
+          passwordItem={false}
           submitOneMore={submitOneMore}
         />
         <SignUpItem
@@ -217,8 +240,8 @@ export default function SignUpPage() {
           changeEvent={(value, isValid) =>
             handleChange("email", value, isValid)
           }
-          pw={null}
-          pwItem={false}
+          password={null}
+          passwordItem={false}
           submitOneMore={submitOneMore}
         />
         <SignUpItem
@@ -226,32 +249,32 @@ export default function SignUpPage() {
           id={"age"}
           checkFun={checkAgeType}
           changeEvent={(value, isValid) => handleChange("age", value, isValid)}
-          pw={null}
-          pwItem={false}
+          password={null}
+          passwordItem={false}
           submitOneMore={submitOneMore}
         />
 
         <SignUpItem
           name={"비밀번호"}
-          id={"pw"}
-          checkFun={checkPWType}
+          id={"password"}
+          checkFun={checkpasswordType}
           changeEvent={(value, isValid) => {
-            handleChange("pw", value, isValid);
-            setPw(value, isValid);
+            handleChange("password", value, isValid);
+            setpassword(value, isValid);
           }}
-          pw={null}
-          pwItem={true}
+          password={null}
+          passwordItem={true}
           submitOneMore={submitOneMore}
         />
         <SignUpItem
           name={"비밀번호 확인"}
-          id={"pwCheck"}
-          checkFun={doubleCheckPW}
+          id={"passwordCheck"}
+          checkFun={doubleCheckpassword}
           changeEvent={(value, isValid) => {
-            handleChange("checkPw", value, isValid);
+            handleChange("passwordCheck", value, isValid);
           }}
-          pw={pw}
-          pwItem={true}
+          password={password}
+          passwordItem={true}
           submitOneMore={submitOneMore}
         />
         <Button color={btnColor}>제출하기</Button>

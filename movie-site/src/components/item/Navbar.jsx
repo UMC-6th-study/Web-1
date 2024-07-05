@@ -54,6 +54,9 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
+      <BuggerBtn>
+        <span></span>
+      </BuggerBtn>
     </Nav>
   );
 }
@@ -97,3 +100,62 @@ const StyledLink = styled(Link)`
   }
 `;
 //따로 useState로 감지할 필요없어서  편하다..
+
+const BuggerBtn = styled.a`
+  position: relative;
+  display: none;
+  width: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: block;
+
+    span,
+    span:before,
+    span:after {
+      display: block;
+    }
+  }
+
+  span,
+  span:before,
+  span:after {
+    display: none;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: #f6f6f6ce;
+    transition: all 0.3s;
+    border-radius: 10px;
+  }
+
+  span {
+    top: 50%;
+    transform: translateY(-50%, -50%);
+  }
+
+  span:before,
+  span:after {
+    content: "";
+  }
+  span:before {
+    top: -10px;
+  }
+  span:after {
+    top: 10px;
+  }
+  /*hover*/
+  &:hover > span {
+    background: transparent;
+  }
+  &:hover > span:before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+  &:hover > span:after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+`;
