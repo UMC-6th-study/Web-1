@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { removeToken } from "custom/token";
 
 export default function Navbar() {
   const [logout, setLogOut] = useState(false);
@@ -8,6 +9,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (logout) {
+      removeToken();
       setStringVar("로그아웃");
     } else {
       setStringVar("로그인");
@@ -16,8 +18,8 @@ export default function Navbar() {
 
   const navItems = [
     {
-      to: "/login",
-      text: `로그인`,
+      to: logout ? "" : "/login",
+      text: `${stringVar}`,
       click: () => {
         setLogOut(!logout);
       },

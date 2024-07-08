@@ -1,57 +1,24 @@
 import SignUpItem from "components/item/SignUpItem";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-
-function noSpace(obj) {
-  const whitespaceRegex = /\s/;
-
-  if ((obj === "") | whitespaceRegex.test(obj)) return false;
-
-  return true;
-}
+import { checkUserNameTypes, checkpasswordType } from "custom/checkTypes";
+import { fetchLoginData } from "custom/fetchData";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-  const [pw, setPw] = useState("");
-
   // 한번 이상 제출 버튼을 눌렀는가 체크 변수
   const [submitOneMore, setSubmitOneMore] = useState(false);
+  const [password, setpassword] = useState("");
+  const navigate = useNavigate();
 
-  function checkIdTypes(obj) {
-    if (noSpace(obj)) {
-      return "";
-    }
-
-    const innerText = "아이디를 입력해주세요!";
-    return innerText;
-  }
-
-  function checkPWType(obj) {
-    let innerText;
-    const regex =
-      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~@#$!%*?&])[a-zA-Z\d~@#$!%*?&]{4,12}$/;
-
-    if (regex.exec(obj)) {
-      // 올바른 비밀번호형식
-      return "";
-    }
-    if (!noSpace(obj)) {
-      innerText = "비밀번호를 입력해주세요";
-    } else if (obj.length < 4) {
-      innerText = "4자리 수 이상이어야 합니다.";
-    } else if (obj.length > 12) {
-      innerText = "12자리 수 이하이어야 합니다.";
-    } else innerText = "올바른 비밀번호 형식이 아닙니다.";
-
-    return innerText;
-  }
   const INIT_DATA = {
-    id: "",
-    pw: "",
+    username: "",
+    password: "",
   };
 
   const INIT_VALIDATION_DATA = {
-    id: false,
-    pw: false,
+    username: false,
+    password: false,
   };
 
   const [checkValid, setCheckValid] = useState(INIT_VALIDATION_DATA);
@@ -71,7 +38,7 @@ export default function LoginPage() {
   };
 
   useEffect(() => {
-    if (checkValid.id && checkValid.pw) {
+    if (checkValid.username && checkValid.password) {
       setBtnColor("#ffe100");
       return;
     }
@@ -87,9 +54,8 @@ export default function LoginPage() {
           e.preventDefault();
           setSubmitOneMore(true);
 
-          if (checkValid.id && checkValid.pw) {
-            console.log(formData);
-            console.log("회원가입 성공");
+          if (checkValid.username && checkValid.password) {
+            fetchLoginData(formData, navigate);
           }
         }}
       >
@@ -97,26 +63,25 @@ export default function LoginPage() {
 
         <SignUpItem
           name={"아이디"}
-          id={"id"}
-          checkFun={checkIdTypes}
+          id={"username"}
+          checkFun={checkUserNameTypes}
           changeEvent={(value, isValid) => {
-            handleChange("id", value, isValid);
+            handleChange("username", value, isValid);
           }}
-          pw={null}
-          pwItem={false}
+          password={null}
+          passwordItem={false}
           submitOneMore={submitOneMore}
         />
-
         <SignUpItem
           name={"비밀번호"}
-          id={"pw"}
-          checkFun={checkPWType}
+          id={"password"}
+          checkFun={checkpasswordType}
           changeEvent={(value, isValid) => {
-            handleChange("pw", value, isValid);
-            setPw(value, isValid);
+            handleChange("password", value, isValid);
+            setpassword(value, isValid);
           }}
-          pw={null}
-          pwItem={true}
+          password={null}
+          passwordItem={true}
           submitOneMore={submitOneMore}
         />
 

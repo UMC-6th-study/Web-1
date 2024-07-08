@@ -2,7 +2,16 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import SignUpItem from "item/SignUpItem";
 import { useNavigate } from "react-router-dom";
-
+import { fetchSignUpData } from "custom/fetchData";
+import {
+  checkAgeType,
+  checkEmailType,
+  checkNameTypes,
+  checkUserNameTypes,
+  checkpasswordType,
+  doubleCheckpassword,
+} from "custom/checkTypes";
+import { INIT_DATA, INIT_VALIDATION_DATA } from "custom/checkTypes";
 /**
  * 1. 동일한 input + notice div 스타일 컴포넌트를 만든다.
  * 2. map 을 이용해 props만 바꾼다.
@@ -13,117 +22,12 @@ import { useNavigate } from "react-router-dom";
  *
  */
 
-/**
- *공백을 검사하는 함수
- * @param obj
- * @returns
- */
-function noSpace(obj) {
-  const whitespaceRegex = /\s/;
-
-  if ((obj === "") | whitespaceRegex.test(obj)) return false;
-
-  return true;
-}
-
-function checkNameTypes(obj) {
-  if (noSpace(obj)) {
-    return "";
-  }
-  const innerText = "필수입력 항목입니다!";
-  return innerText;
-}
-
-function checkIdTypes(obj) {
-  if (noSpace(obj)) {
-    return "";
-  }
-
-  const innerText = "아이디를 입력해주세요!";
-  return innerText;
-}
-
-function checkEmailType(obj) {
-  let innerText;
-  if (obj.includes("@") && noSpace(obj)) {
-    return "";
-  }
-
-  if (!noSpace(obj)) {
-    innerText = "이메일을 입력해주세요";
-    return innerText;
-  }
-  innerText = "올바른 이메일 형식이 아닙니다!";
-  return innerText;
-}
-
-function checkpasswordType(obj) {
-  let innerText;
-  const regex =
-    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~@#$!%*?&])[a-zA-Z\d~@#$!%*?&]{4,12}$/;
-
-  if (regex.exec(obj)) {
-    // 올바른 비밀번호형식
-    return "";
-  }
-  if (!noSpace(obj)) {
-    innerText = "비밀번호를 입력해주세요";
-  } else if (obj.length < 4) {
-    innerText = "4자리 수 이상이어야 합니다.";
-  } else if (obj.length > 12) {
-    innerText = "12자리 수 이하이어야 합니다.";
-  } else innerText = "올바른 비밀번호 형식이 아닙니다.";
-
-  return innerText;
-}
-
-function checkAgeType(obj) {
-  let innerText;
-  const regex = /^[0-9]*$/;
-  if (regex.exec(obj) && parseInt(obj) >= 19) {
-    return "";
-  }
-
-  if (parseInt(obj) < 0) {
-    innerText = "나이는 양수여야합니다.";
-  } else if (parseInt(obj) < 19) {
-    innerText = "19세 이상만 사용 가능합니다.";
-  } else if (!Number.isInteger(obj)) {
-    innerText = "나이는 실수로 입력해주세요.";
-  } else {
-    innerText = "비밀번호를 입력해주세요";
-  }
-
-  return innerText;
-}
-
-function doubleCheckpassword(password, obj) {
-  let innerText;
-  if (obj === password) {
-    innerText = "비밀번호 일치합니다.";
-    return innerText;
-  }
-  innerText = "비밀번호 일치하지 않습니다.";
-  return innerText;
-  // password input창 value 같은지 확인해야함
-}
-
-// formData 초기값 데이터가 ""인지를 체크 => 아니라면 변화 유
-
 export default function SignUpPage() {
-  const INIT_DATA = {
-    name: "",
-    username: "",
-    email: "",
-    age: "",
-    password: "",
-    passwordCheck: "",
-  };
   const [formData, setFormData] = useState(INIT_DATA);
-
+  const [checkValid, setCheckValid] = useState(INIT_VALIDATION_DATA);
   const [password, setpassword] = useState("");
-  const useNavigation = useNavigate();
   const [btnColor, setBtnColor] = useState("white");
+  const navigate = useNavigate();
 
   const handleChange = (tagName, value, isValid) => {
     setFormData({
@@ -136,17 +40,6 @@ export default function SignUpPage() {
       [tagName]: isValid,
     });
   };
-
-  const INIT_VALIDATION_DATA = {
-    name: false,
-    username: false,
-    email: false,
-    age: false,
-    password: false,
-    passwordCheck: false,
-  };
-
-  const [checkValid, setCheckValid] = useState(INIT_VALIDATION_DATA);
 
   // 한번 이상 제출 버튼을 눌렀는가 체크 변수
   const [submitOneMore, setSubmitOneMore] = useState(false);
@@ -161,7 +54,7 @@ export default function SignUpPage() {
       checkValid.password &&
       checkValid.passwordCheck
     ) {
-      setBtnColor("#ffe100");
+      setBtnColor("#ffe100d4");
       return;
     }
 
@@ -179,32 +72,8 @@ export default function SignUpPage() {
       checkValid.password &&
       checkValid.passwordCheck
     ) {
-      console.log(formData);
-      fetchData();
+      fetchSignUpData(formData, navigate);
     }
-  };
-
-  const fetchData = () => {
-    fetch("http://localhost:8080/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => {
-        // if (res.status >= 400) {
-        //   throw new Error(`status: ${res.status}`);
-        // }
-
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   };
 
   return (
@@ -225,7 +94,7 @@ export default function SignUpPage() {
         <SignUpItem
           name={"아이디"}
           id={"username"}
-          checkFun={checkIdTypes}
+          checkFun={checkUserNameTypes}
           changeEvent={(value, isValid) => {
             handleChange("username", value, isValid);
           }}
@@ -283,7 +152,7 @@ export default function SignUpPage() {
           <button
             onClick={(e) => {
               e.preventDefault();
-              useNavigation("/login");
+              navigate("/login");
             }}
           >
             로그인 페이지로 이동하기

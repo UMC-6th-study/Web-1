@@ -30,6 +30,7 @@ export default function SignUpItem({
   // 비밀번호 확인 컴포넌트 일때
   const onChangepasswordCheck = (password, input) => {
     setNotice(checkFun(password, input));
+    changeEvent(input, false);
 
     if (checkFun(password, input) === "비밀번호 일치합니다.") {
       changeEvent(input, true);
