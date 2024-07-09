@@ -4,13 +4,13 @@ import styled from "styled-components";
 import { removeToken } from "custom/token";
 import { isTokenStored } from "custom/token";
 
-export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
+export default function Navbar({ setIsLoggedIn }) {
   const navItems = [
     {
-      to: isLoggedIn ? "" : "/login",
-      text: isLoggedIn ? "로그아웃" : "로그인",
+      to: isTokenStored() ? "" : "/login",
+      text: isTokenStored() ? "로그아웃" : "로그인",
       click: () => {
-        if (isLoggedIn) {
+        if (isTokenStored()) {
           removeToken();
           setIsLoggedIn(false);
         }

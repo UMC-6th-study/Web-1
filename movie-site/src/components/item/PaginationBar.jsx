@@ -41,16 +41,20 @@ export default function PaginationBar({ setPageNum, pageNum }) {
     if (pageNum - 1 == 1) {
       setLeftOpacity("0.33");
       setPageNum((prev) => prev - 1);
+      window.scrollTo({ left: 0, top: 0 });
+
       return;
     }
 
     setLeftOpacity("1");
     setPageNum((prev) => prev - 1);
+    window.scrollTo({ left: 0, top: 0 });
   };
 
   const rightArrowClicked = () => {
     setLeftOpacity("1");
     setPageNum((prev) => prev + 1);
+    window.scrollTo({ left: 0, top: 0 });
   };
 
   return (
