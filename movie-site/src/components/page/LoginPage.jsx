@@ -5,7 +5,7 @@ import { checkUserNameTypes, checkpasswordType } from "custom/checkTypes";
 import { fetchLoginData } from "custom/fetchData";
 import { useNavigate } from "react-router-dom";
 
-export default function LoginPage() {
+export default function LoginPage({ setIsLoggedIn }) {
   // 한번 이상 제출 버튼을 눌렀는가 체크 변수
   const [submitOneMore, setSubmitOneMore] = useState(false);
   const [password, setpassword] = useState("");
@@ -49,13 +49,14 @@ export default function LoginPage() {
   return (
     <>
       <FormContainer
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           // 아무것도 없다면 제출 금지
           e.preventDefault();
           setSubmitOneMore(true);
 
           if (checkValid.username && checkValid.password) {
-            fetchLoginData(formData, navigate);
+            const loginSuccess = await fetchLoginData(formData, navigate);
+            setIsLoggedIn(loginSuccess);
           }
         }}
       >

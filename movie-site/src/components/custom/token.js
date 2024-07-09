@@ -7,6 +7,9 @@ export const storeToken = (obj) => {
 };
 
 export const removeToken = () => {
+  const storgeToken = window.localStorage.getItem(TOKEN);
+  console.log("storageToken:" + storgeToken);
+
   window.localStorage.removeItem(TOKEN);
   window.localStorage.removeItem(USER_NAME);
 };

@@ -9,13 +9,26 @@ import Navbar from "item/Navbar";
 import MovieDetailPage from "page/MovieDetailPage";
 import LoginPage from "page/LoginPage";
 
+import { useEffect, useState } from "react";
+
 function App() {
+  /**
+   * 현재 상태 기준
+   * true면 login 상태
+   * false면 logout
+   */
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    console.log(`isLogout : ${isLoggedIn}`);
+  }, [isLoggedIn]);
+
   return (
     <>
       <BrowserRouter>
-        <Navbar />
+        <Navbar setIsLoggedIn={setIsLoggedIn} />
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<MainPage isLoggedIn={isLoggedIn} />} />
           <Route path="/signUp" element={<SignUpPage />} />
           <Route path="/popular" element={<PopularPage />} />
           <Route path="/nowPlaying" element={<NowPlayingPage />} />
@@ -23,7 +36,10 @@ function App() {
           <Route path="/upcoming" element={<UpcomingPage />} />
 
           <Route path="/movie/:id" element={<MovieDetailPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/login"
+            element={<LoginPage setIsLoggedIn={setIsLoggedIn} />}
+          />
         </Routes>
         <footer>MakeusUMC</footer>
       </BrowserRouter>

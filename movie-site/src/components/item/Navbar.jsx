@@ -2,26 +2,18 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { removeToken } from "custom/token";
+import { isTokenStored } from "custom/token";
 
-export default function Navbar() {
-  const [logout, setLogOut] = useState(false);
-  const [stringVar, setStringVar] = useState("로그인");
-
-  useEffect(() => {
-    if (logout) {
-      removeToken();
-      setStringVar("로그아웃");
-    } else {
-      setStringVar("로그인");
-    }
-  }, [logout]);
-
+export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
   const navItems = [
     {
-      to: logout ? "" : "/login",
-      text: `${stringVar}`,
+      to: isLoggedIn ? "" : "/login",
+      text: isLoggedIn ? "로그아웃" : "로그인",
       click: () => {
-        setLogOut(!logout);
+        if (isLoggedIn) {
+          removeToken();
+          setIsLoggedIn(false);
+        }
       },
     },
     {

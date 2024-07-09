@@ -39,32 +39,32 @@ export const fetchSignUpData = (formData, navigate) => {
     });
 };
 
-export const fetchLoginData = (formData, navigate) => {
-  fetch("http://localhost:8080/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  })
-    .then((res) => {
-      if (res.status === 200) {
-        alert("로그인 성공!");
-        return res.json();
-      }
-
-      if (res.status === 401) {
-        alert("아이디나 비밀번호를 다시 확인해주세요.");
-      }
-
-      throw new Error(`${res.status}`);
-    })
-    .then((data) => {
-      navigate("/");
-      console.log(data);
-      storeToken(data);
-    })
-    .catch((error) => {
-      console.error(error);
+export const fetchLoginData = async (formData, navigate) => {
+  try {
+    const res = await fetch("http://localhost:8080/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
     });
+
+    if (res.status === 200) {
+      alert("로그인 성공!");
+      const data = await res.json();
+      navigate("/");
+      storeToken(data);
+      return true;
+    }
+
+    if (res.status === 401) {
+      alert("아이디나 비밀번호를 다시 확인해주세요.");
+      return false;
+    }
+
+    throw new Error(`${res.status}`);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 };

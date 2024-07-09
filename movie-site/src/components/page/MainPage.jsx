@@ -2,12 +2,15 @@ import styled from "styled-components";
 import Movie from "item/Movie";
 import { useEffect, useState } from "react";
 import useDebounce from "custom/useDebounce";
+import { isTokenStored } from "custom/token";
 
-export default function MainPage() {
+export default function MainPage({ isLoggedIn }) {
   const [text, setText] = useState("");
   const [empty, setEmpty] = useState(true);
   const [loading, setLoading] = useState(false);
   const [movieList, setMovieList] = useState([]);
+  const [username, setUserName] = useState(null);
+  const [tokenCheckAgain, setCheckAgain] = useState(false);
 
   /**
    * fetch함수
@@ -60,9 +63,50 @@ export default function MainPage() {
     searchData(queryString);
   }, [queryString]);
 
+  /**
+   * 스토리지에 있는 username이 null이 아닐때까지 무한 렌더링..
+   * 이것보단 디바운스가 나을듯 했지만,
+   * 로컬 스토리지를 확인할 트리거가 딱히 없기에 렌더링이 낫다 판단.
+   *
+   * 그냥 / 이동전에 localstorage에 저장하면 안되나?
+   */
+  useEffect(() => {
+    const username = window.localStorage.getItem("username");
+    if (!username) {
+      //null이라면,
+      setCheckAgain((prev) => !prev);
+      return;
+    }
+
+    setUserName(username);
+  }, [tokenCheckAgain]);
+
+  /**
+   * username 처음 도착하지 않았을땐 null, 로딩중..
+   * username이 null 이라면 로그아웃 상태 => 환영합니다.
+   * username이 !null => ${username} 환영합니다
+   *
+   * 로그인 후 바로 유저 데이터를 못 받아온다.
+   * 때문에 LoginPage 에서의 isLoggedIn으로 1차 로직
+   * 유저데이터 받아왔을때의 트리거?
+   *
+   * fetch함수가 데이터를 받아왔을때
+   * -> loginpage에 있음
+   *
+   * navigate로 이동할때 데이터 전달하는 방법 있음
+   *
+   *
+   */
+
   return (
     <MainPageBody id="main-page">
-      <Welcome>환영합니다.</Welcome>
+      <Welcome>
+        {isLoggedIn
+          ? username
+            ? `${username}님 환영합니다.`
+            : "로딩중.."
+          : "환영합니다."}
+      </Welcome>
       <Search onSubmit={onSubmit}>
         <h2> Find your movies!</h2>
         <div className={"input-contianer"}>
