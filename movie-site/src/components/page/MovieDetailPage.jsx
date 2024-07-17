@@ -3,6 +3,7 @@ import MoviewDetail from "item/MovieDetail";
 import { Link, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import LoaderSpinner from "item/LoaderSpinner";
 
 import { styled } from "styled-components";
 
@@ -77,11 +78,12 @@ export default function MovieDetailPage() {
     return <MoviewDetail elem={nowMovie} />;
   }
 
-  return isLoading ? <div>Loading</div> : showComponent();
+  return isLoading ? <LoaderSpinner /> : showComponent();
 }
 
 const NotFound = styled.div`
   display: flex;
+
   flex-direction: column;
   justify-content: center;
   height: 100%;

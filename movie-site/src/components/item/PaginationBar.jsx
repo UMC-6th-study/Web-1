@@ -60,11 +60,11 @@ export default function PaginationBar({ setPageNum, pageNum }) {
   return (
     <Container>
       <Button opacity={leftOpacity} onClick={leftArrowClicked}>
-        <img src="public/leftArrow.png" />
+        <img src="/leftArrow.png" />
       </Button>
       <p>{pageNum}</p>
       <Button onClick={rightArrowClicked}>
-        <img src="public/rightArrow.png" />
+        <img src="/rightArrow.png" />
       </Button>
     </Container>
   );
