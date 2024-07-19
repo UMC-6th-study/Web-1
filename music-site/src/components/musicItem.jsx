@@ -54,12 +54,19 @@ export default function MusicItem({ props }) {
 
 const ItemWrapper = styled.div`
   display: flex;
-
-  flex: 1 1 0;
+  min-width: 800px;
+  border: solid white;
+  padding: 10px;
+  margin: 10px;
+  justify-content: space-between;
 
   .music-info {
     display: flex;
     /* background-color: white; */
+  }
+
+  .detail {
+    margin-left: 30px;
   }
   img {
     height: 50px;
